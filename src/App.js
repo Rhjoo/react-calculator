@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import uuid from 'uuid/v1';
 
 function App() {
   const [inputState, setInputState] = useState("");
@@ -25,6 +26,7 @@ function App() {
 
   const handleMakeEquationClick = () => {
     setEquation({
+      id: uuid(),
       firstNumber: firstNumber,
       opeprator: operator,
       secondNumber: secondNumber
