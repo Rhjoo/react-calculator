@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import uuid from 'uuid/v1';
+import { type } from 'os';
 
 function App() {
   const [inputState, setInputState] = useState("");
@@ -7,6 +8,7 @@ function App() {
   const [firstNumber, setFirstNumber] = useState();
   const [secondNumber, setSecondNumber] = useState();
   const [equation, setEquation] = useState();  
+  const [result, setResult] = useState();  
 
   const handleNumberClick = (value) => {
     setInputState(inputState + value);
@@ -33,6 +35,10 @@ function App() {
     })
   }
 
+  const addMathClick = () => {
+    setResult(parseInt(firstNumber) + parseInt(secondNumber));
+  }
+
   return (
     <div className="App">
       <NumberButton value={7} handleNumberClick={handleNumberClick} />
@@ -40,10 +46,11 @@ function App() {
       <FirstEnterButton handleFirstEnterClick={handleFirstEnterClick} />
       <SecondEnterButton handleSecondEnterClick={handleSecondEnterClick} />
       <MakeEquationButton handleMakeEquationClick={handleMakeEquationClick} />
+      <AddMathButton addMathClick={addMathClick} />
       <br />
       {inputState} 
       <br />
-      {firstNumber} {operator} {secondNumber}
+      {firstNumber} {operator} {secondNumber} = {result}
     </div>
   );
 };
@@ -87,6 +94,14 @@ function MakeEquationButton(props) {
     </button>
   );
 };
+
+function AddMathButton(props) {
+  return (
+    <button onClick={() => props.addMathClick()}>
+      Do the Math!
+    </button>
+  )
+}
 
 export default App;
 
