@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import uuid from 'uuid/v1';
-import { type } from 'os';
 
 function App() {
   const [inputState, setInputState] = useState("");
@@ -9,6 +8,7 @@ function App() {
   const [secondNumber, setSecondNumber] = useState();
   const [equation, setEquation] = useState();  
   const [result, setResult] = useState();  
+  const [storeEquations, setStoreEquations] = useState([]);  
 
   const handleNumberClick = (value) => {
     setInputState(inputState + value);
@@ -30,27 +30,48 @@ function App() {
     setEquation({
       id: uuid(),
       firstNumber: firstNumber,
-      opeprator: operator,
-      secondNumber: secondNumber
+      operator: operator,
+      secondNumber: secondNumber,
+      result: result
     })
-  }
+  };
 
   const addMathClick = () => {
     setResult(parseInt(firstNumber) + parseInt(secondNumber));
-  }
+  };
+
+  const inputClearClick = () => {
+    setInputState("");
+  };
+
+  const storeEquationsClick = () => {
+    setStoreEquations([...storeEquations, equation]);
+  };
 
   return (
     <div className="App">
-      <NumberButton value={7} handleNumberClick={handleNumberClick} />
+      <NumberButton value={1} handleNumberClick={handleNumberClick}>1</NumberButton> 
+      <NumberButton value={2} handleNumberClick={handleNumberClick}>2</NumberButton> 
+      <NumberButton value={3} handleNumberClick={handleNumberClick}>3</NumberButton> 
+      <NumberButton value={4} handleNumberClick={handleNumberClick}>4</NumberButton> 
+      <NumberButton value={5} handleNumberClick={handleNumberClick}>5</NumberButton> 
+      <NumberButton value={6} handleNumberClick={handleNumberClick}>6</NumberButton> 
+      <NumberButton value={7} handleNumberClick={handleNumberClick}>7</NumberButton> 
+      <NumberButton value={8} handleNumberClick={handleNumberClick}>8</NumberButton> 
+      <NumberButton value={9} handleNumberClick={handleNumberClick}>9</NumberButton> 
+      <NumberButton value={0} handleNumberClick={handleNumberClick}>0</NumberButton> 
       <OperatorButton value={"+"} handleOperatorClick={handleOperatorClick} />
       <FirstEnterButton handleFirstEnterClick={handleFirstEnterClick} />
       <SecondEnterButton handleSecondEnterClick={handleSecondEnterClick} />
-      <MakeEquationButton handleMakeEquationClick={handleMakeEquationClick} />
       <AddMathButton addMathClick={addMathClick} />
+      <MakeEquationButton handleMakeEquationClick={handleMakeEquationClick} />
+      <StoreEquationsButton storeEquationsClick={storeEquationsClick} />
+      <InputClearButton inputClearClick={inputClearClick} />
       <br />
       {inputState} 
       <br />
       {firstNumber} {operator} {secondNumber} = {result}
+      <EquationsList storeEquations={storeEquations} />
     </div>
   );
 };
@@ -58,7 +79,7 @@ function App() {
 function NumberButton(props) {
   return (
     <button onClick={() => props.handleNumberClick(props.value)}>
-      7
+      {props.children}
     </button>
   );
 };
@@ -100,6 +121,42 @@ function AddMathButton(props) {
     <button onClick={() => props.addMathClick()}>
       Do the Math!
     </button>
+  );
+};
+
+function InputClearButton(props) {
+  return (
+    <button onClick={() => props.inputClearClick()}>
+      Clear
+    </button>
+  );
+};
+
+function StoreEquationsButton(props) {
+  return (
+    <button onClick={() => props.storeEquationsClick()}>
+      Store equation
+    </button>
+  );
+};
+
+function EquationsList(props) {
+  return (
+    <div>
+      {props.storeEquations.map(equation => <Equation key={equation.id} 
+                                                      firstNumber={equation.firstNumber} 
+                                                      operator={equation.operator} 
+                                                      secondNumber={equation.secondNumber} 
+                                                      result={equation.result} />)}
+    </div>
+  );
+};
+
+function Equation(props) {
+  return (
+    <li>
+      {props.firstNumber} {props.operator} {props.secondNumber} = {props.result}
+    </li>
   )
 }
 
