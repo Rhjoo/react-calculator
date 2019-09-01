@@ -58,6 +58,12 @@ function App() {
     setInputState("");
   };
 
+  const equationClearClick = () => {
+    setFirstNumber("");
+    setOperator("");
+    setSecondNumber("");
+  };
+
   const storeEquationsClick = () => {
     setStoreEquations([...storeEquations, equation]);
   };
@@ -86,6 +92,7 @@ function App() {
       <MakeEquationButton handleMakeEquationClick={handleMakeEquationClick} />
       <StoreEquationsButton storeEquationsClick={storeEquationsClick} />
       <InputClearButton inputClearClick={inputClearClick} />
+      <EquationClearButton equationClearClick={equationClearClick} />
       <br />
       {inputState} 
       <br />
@@ -146,7 +153,15 @@ function DoMathButton(props) {
 function InputClearButton(props) {
   return (
     <button onClick={() => props.inputClearClick()}>
-      Clear
+      Clear Input
+    </button>
+  );
+};
+
+function EquationClearButton(props) {
+  return (
+    <button onClick={() => props.equationClearClick()}>
+      Clear Equation
     </button>
   );
 };
