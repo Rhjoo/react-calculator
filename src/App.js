@@ -36,8 +36,22 @@ function App() {
     })
   };
 
-  const addMathClick = () => {
-    setResult(parseInt(firstNumber) + parseInt(secondNumber));
+  const doMathClick = () => {
+    switch(operator) {
+      case "+":
+        setResult(parseInt(firstNumber) + parseInt(secondNumber));
+        break;
+      case "-":
+        setResult(parseInt(firstNumber) - parseInt(secondNumber));
+        break;
+      case "x":
+        setResult(parseInt(firstNumber) * parseInt(secondNumber));
+        break;
+      case "÷":
+        setResult(parseInt(firstNumber) / parseInt(secondNumber));
+        break;
+      default:  
+    };
   };
 
   const inputClearClick = () => {
@@ -60,10 +74,15 @@ function App() {
       <NumberButton value={8} handleNumberClick={handleNumberClick}>8</NumberButton> 
       <NumberButton value={9} handleNumberClick={handleNumberClick}>9</NumberButton> 
       <NumberButton value={0} handleNumberClick={handleNumberClick}>0</NumberButton> 
-      <OperatorButton value={"+"} handleOperatorClick={handleOperatorClick} />
+      <br />
+      <OperatorButton value={"+"} handleOperatorClick={handleOperatorClick}>+</OperatorButton> 
+      <OperatorButton value={"-"} handleOperatorClick={handleOperatorClick}>-</OperatorButton>
+      <OperatorButton value={"x"} handleOperatorClick={handleOperatorClick}>x</OperatorButton>
+      <OperatorButton value={"÷"} handleOperatorClick={handleOperatorClick}>÷</OperatorButton>
+      <br />
       <FirstEnterButton handleFirstEnterClick={handleFirstEnterClick} />
       <SecondEnterButton handleSecondEnterClick={handleSecondEnterClick} />
-      <AddMathButton addMathClick={addMathClick} />
+      <DoMathButton doMathClick={doMathClick} />
       <MakeEquationButton handleMakeEquationClick={handleMakeEquationClick} />
       <StoreEquationsButton storeEquationsClick={storeEquationsClick} />
       <InputClearButton inputClearClick={inputClearClick} />
@@ -87,7 +106,7 @@ function NumberButton(props) {
 function OperatorButton(props) {
   return (
     <button onClick={() => props.handleOperatorClick(props.value)}>
-      +
+      {props.children}
     </button>
   );
 };
@@ -116,9 +135,9 @@ function MakeEquationButton(props) {
   );
 };
 
-function AddMathButton(props) {
+function DoMathButton(props) {
   return (
-    <button onClick={() => props.addMathClick()}>
+    <button onClick={() => props.doMathClick()}>
       Do the Math!
     </button>
   );
