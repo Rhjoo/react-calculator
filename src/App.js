@@ -6,6 +6,7 @@ function App() {
   const [operator, setOperator] = useState();
   const [firstNumber, setFirstNumber] = useState();
   const [secondNumber, setSecondNumber] = useState();
+  const [equalSign, setEqualSign] = useState();
   const [equation, setEquation] = useState();  
   const [result, setResult] = useState();  
   const [storeEquations, setStoreEquations] = useState([]);  
@@ -54,6 +55,11 @@ function App() {
     };
   };
 
+  const handleEqualClick = () => {
+    setEqualSign("=")
+    doMathClick();
+  };
+
   const inputClearClick = () => {
     setInputState("");
   };
@@ -62,6 +68,8 @@ function App() {
     setFirstNumber("");
     setOperator("");
     setSecondNumber("");
+    setEqualSign("");
+    setResult("");
   };
 
   const storeEquationsClick = () => {
@@ -85,6 +93,7 @@ function App() {
       <OperatorButton value={"-"} handleOperatorClick={handleOperatorClick}>-</OperatorButton>
       <OperatorButton value={"x"} handleOperatorClick={handleOperatorClick}>x</OperatorButton>
       <OperatorButton value={"÷"} handleOperatorClick={handleOperatorClick}>÷</OperatorButton>
+      <EqualButton handleEqualClick={handleEqualClick}>=</EqualButton>
       <br />
       <FirstEnterButton handleFirstEnterClick={handleFirstEnterClick} />
       <SecondEnterButton handleSecondEnterClick={handleSecondEnterClick} />
@@ -96,7 +105,7 @@ function App() {
       <br />
       {inputState} 
       <br />
-      {firstNumber} {operator} {secondNumber} = {result}
+      {firstNumber} {operator} {secondNumber} {equalSign} {result}
       <EquationsList storeEquations={storeEquations} />
     </div>
   );
@@ -177,11 +186,13 @@ function StoreEquationsButton(props) {
 function EquationsList(props) {
   return (
     <div>
-      {props.storeEquations.map(equation => <Equation key={equation.id} 
-                                                      firstNumber={equation.firstNumber} 
-                                                      operator={equation.operator} 
-                                                      secondNumber={equation.secondNumber} 
-                                                      result={equation.result} />)}
+      {props.storeEquations.map(
+        equation => <Equation key={equation.id} 
+                              firstNumber={equation.firstNumber} 
+                              operator={equation.operator} 
+                              secondNumber={equation.secondNumber} 
+                              result={equation.result} />
+      )}
     </div>
   );
 };
@@ -191,8 +202,16 @@ function Equation(props) {
     <li>
       {props.firstNumber} {props.operator} {props.secondNumber} = {props.result}
     </li>
-  )
-}
+  );
+};
+
+function EqualButton(props) {
+  return (
+    <button onClick={() => props.handleEqualClick()}>
+      =
+    </button>
+  );
+};
 
 export default App;
 
