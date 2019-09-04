@@ -24,7 +24,9 @@ function App() {
   };
   
   const handleOperatorClick = (value) => {
-    setOperator(value);
+    if (inputState !== "") {
+      setOperator(value);
+    }
   };
 
   const handleMakeEquationClick = () => {
@@ -40,16 +42,16 @@ function App() {
   const doMathClick = () => {
     switch(operator) {
       case "+":
-        setResult(parseInt(firstNumber) + parseInt(secondNumber));
+        setResult(Number(firstNumber) + Number(secondNumber));
         break;
       case "-":
-        setResult(parseInt(firstNumber) - parseInt(secondNumber));
+        setResult(Number(firstNumber) - Number(secondNumber));
         break;
       case "x":
-        setResult(parseInt(firstNumber) * parseInt(secondNumber));
+        setResult(Number(firstNumber) * Number(secondNumber));
         break;
       case "÷":
-        setResult(parseInt(firstNumber) / parseInt(secondNumber));
+        setResult(Number(firstNumber) / Number(secondNumber));
         break;
       default:  
     };
@@ -88,6 +90,7 @@ function App() {
       <NumberButton value={8} handleNumberClick={handleNumberClick}>8</NumberButton> 
       <NumberButton value={9} handleNumberClick={handleNumberClick}>9</NumberButton> 
       <NumberButton value={0} handleNumberClick={handleNumberClick}>0</NumberButton> 
+      <NumberButton value={"."} handleNumberClick={handleNumberClick}>.</NumberButton> 
       <br />
       <OperatorButton value={"+"} handleOperatorClick={handleOperatorClick}>+</OperatorButton> 
       <OperatorButton value={"-"} handleOperatorClick={handleOperatorClick}>-</OperatorButton>
