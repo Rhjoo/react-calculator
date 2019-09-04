@@ -15,6 +15,12 @@ function App() {
     setInputState(inputState + value);
   };
   
+  const handleDotClick = (value) => {
+    if (inputState.slice(-1) !== ".") {
+      setInputState(inputState + value);
+    }
+  };
+  
   const handleFirstEnterClick = () => {
     setFirstNumber(inputState);
   };
@@ -90,7 +96,7 @@ function App() {
       <NumberButton value={8} handleNumberClick={handleNumberClick}>8</NumberButton> 
       <NumberButton value={9} handleNumberClick={handleNumberClick}>9</NumberButton> 
       <NumberButton value={0} handleNumberClick={handleNumberClick}>0</NumberButton> 
-      <NumberButton value={"."} handleNumberClick={handleNumberClick}>.</NumberButton> 
+      <DotButton value={"."} handleDotClick={handleDotClick}>.</DotButton> 
       <br />
       <OperatorButton value={"+"} handleOperatorClick={handleOperatorClick}>+</OperatorButton> 
       <OperatorButton value={"-"} handleOperatorClick={handleOperatorClick}>-</OperatorButton>
@@ -117,6 +123,14 @@ function App() {
 function NumberButton(props) {
   return (
     <button onClick={() => props.handleNumberClick(props.value)}>
+      {props.children}
+    </button>
+  );
+};
+
+function DotButton(props) {
+  return (
+    <button onClick={() => props.handleDotClick(props.value)}>
       {props.children}
     </button>
   );
