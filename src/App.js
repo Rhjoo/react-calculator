@@ -123,6 +123,7 @@ function App() {
       {inputState} 
       <br />
       {firstNumber} {operator} {secondNumber} {equalSign} {result}
+      <View inputState={inputState} firstNumber={firstNumber} operator={operator} secondNumber={secondNumber} equalSign={equalSign} result={result} />
       <EquationsList storeEquations={storeEquations} />
     </div>
   );
@@ -244,6 +245,32 @@ function EqualButton(props) {
       =
     </button>
   );
+};
+
+function View(props) {
+  const { inputState, firstNumber, operator, secondNumber, equalSign, result } = props;
+
+  if (firstNumber === undefined) {
+    return (
+      <div>
+        {inputState}
+      </div>
+    )
+  } else {
+    if (secondNumber === undefined) {
+      return (
+        <div>
+          {firstNumber} {operator} {inputState} {equalSign} {result}
+        </div>
+      )
+    } else {
+      return (
+        <div>
+          {firstNumber} {operator} {secondNumber} {equalSign} {result}
+        </div>
+      )
+    }
+  }
 };
 
 export default App;
