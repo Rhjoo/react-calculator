@@ -63,6 +63,12 @@ function App() {
     };
   };
 
+  const handlePlusClick = (value) => {
+    handleFirstEnterClick();
+    handleOperatorClick(value);
+    inputClearClick();
+  };
+
   const handleEqualClick = () => {
     setEqualSign("=")
     doMathClick();
@@ -104,6 +110,8 @@ function App() {
       <OperatorButton value={"÷"} handleOperatorClick={handleOperatorClick}>÷</OperatorButton>
       <EqualButton handleEqualClick={handleEqualClick}>=</EqualButton>
       <br />
+      <PlusButton value={"+"} handlePlusClick={handlePlusClick}><strong>+</strong></PlusButton> 
+      <br />
       <FirstEnterButton handleFirstEnterClick={handleFirstEnterClick} />
       <SecondEnterButton handleSecondEnterClick={handleSecondEnterClick} />
       <DoMathButton doMathClick={doMathClick} />
@@ -123,6 +131,14 @@ function App() {
 function NumberButton(props) {
   return (
     <button onClick={() => props.handleNumberClick(props.value)}>
+      {props.children}
+    </button>
+  );
+};
+
+function PlusButton(props) {
+  return (
+    <button onClick={() => props.handlePlusClick(props.value)}>
       {props.children}
     </button>
   );
