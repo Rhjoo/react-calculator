@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import uuid from 'uuid/v1';
 
 function App() {
@@ -70,20 +70,44 @@ function App() {
   };
 
   const handleEqualClick = () => {
-    setEqualSign("=")
+    setEqualSign("=");
     doMathClick();
   };
+  
+  const handleBigEqualClick = async () => {
+    handleSecondEnterClick();
+  };
+
+  useEffect(() => {
+    if (secondNumber !== undefined) {
+      handleEqualClick();
+    }
+  }, [secondNumber]);
+
+  useEffect(() => {
+    if (result !== undefined) {
+      handleMakeEquationClick();
+    }    
+  }, [result]);
+  
+  useEffect(() => {
+    if (equation !== undefined) {
+      storeEquationsClick();
+      inputClearClick();
+      equationClearClick();
+    }
+  }, [equation]);
 
   const inputClearClick = () => {
     setInputState("");
   };
 
   const equationClearClick = () => {
-    setFirstNumber("");
-    setOperator("");
-    setSecondNumber("");
-    setEqualSign("");
-    setResult("");
+    setFirstNumber(undefined);
+    setOperator(undefined);
+    setSecondNumber(undefined);
+    setEqualSign(undefined);
+    setResult(undefined);
   };
 
   const storeEquationsClick = () => {
@@ -111,6 +135,7 @@ function App() {
       <EqualButton handleEqualClick={handleEqualClick}>=</EqualButton>
       <br />
       <PlusButton value={"+"} handlePlusClick={handlePlusClick}><strong>+</strong></PlusButton> 
+      <BigEqualButton handleBigEqualClick={handleBigEqualClick}><strong>=</strong></BigEqualButton>
       <br />
       <FirstEnterButton handleFirstEnterClick={handleFirstEnterClick} />
       <SecondEnterButton handleSecondEnterClick={handleSecondEnterClick} />
@@ -242,6 +267,14 @@ function Equation(props) {
 function EqualButton(props) {
   return (
     <button onClick={() => props.handleEqualClick()}>
+      =
+    </button>
+  );
+};
+
+function BigEqualButton(props) {
+  return (
+    <button onClick={() => props.handleBigEqualClick()}>
       =
     </button>
   );
