@@ -30,7 +30,7 @@ function App() {
   };
   
   const handleOperatorClick = (value) => {
-    if (inputState !== "") {
+    if (inputState !== "" || firstNumber !== undefined) {
       setOperator(value);
     }
   };
@@ -63,8 +63,11 @@ function App() {
     };
   };
 
-  const handlePlusClick = (value) => {
-    handleFirstEnterClick();
+  const handleBigButtonClick = (value) => {
+    if (firstNumber === undefined) {
+      handleFirstEnterClick();
+    };
+    console.log(value);
     handleOperatorClick(value);
     inputClearClick();
   };
@@ -96,7 +99,9 @@ function App() {
     if (equation !== undefined) {
       storeEquationsClick();
       inputClearClick();
+      const temp = result;
       equationClearClick();
+      setFirstNumber(temp);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [equation]);
@@ -117,8 +122,16 @@ function App() {
     setStoreEquations([...storeEquations, equation]);
   };
 
+  const bigClearClick = () => {
+    setInputState("");
+    equationClearClick();
+  };
+
   return (
     <div className="App">
+      <EquationsList storeEquations={storeEquations} />
+      <View inputState={inputState} firstNumber={firstNumber} operator={operator} secondNumber={secondNumber} equalSign={equalSign} result={result} />
+      <br />
       <NumberButton value={1} handleNumberClick={handleNumberClick}>1</NumberButton> 
       <NumberButton value={2} handleNumberClick={handleNumberClick}>2</NumberButton> 
       <NumberButton value={3} handleNumberClick={handleNumberClick}>3</NumberButton> 
@@ -137,25 +150,24 @@ function App() {
       <OperatorButton value={"÷"} handleOperatorClick={handleOperatorClick}>÷</OperatorButton>
       <EqualButton handleEqualClick={handleEqualClick}>=</EqualButton>
       <br />
-      <PlusButton value={"+"} handlePlusClick={handlePlusClick}><strong>+</strong></PlusButton> 
-      <PlusButton value={"-"} handlePlusClick={handlePlusClick}><strong>-</strong></PlusButton> 
-      <PlusButton value={"x"} handlePlusClick={handlePlusClick}><strong>x</strong></PlusButton> 
-      <PlusButton value={"÷"} handlePlusClick={handlePlusClick}><strong>÷</strong></PlusButton> 
+      <PlusButton value={"+"} handlePlusClick={handleBigButtonClick}><strong>+</strong></PlusButton> 
+      <PlusButton value={"-"} handlePlusClick={handleBigButtonClick}><strong>-</strong></PlusButton> 
+      <PlusButton value={"x"} handlePlusClick={handleBigButtonClick}><strong>x</strong></PlusButton> 
+      <PlusButton value={"÷"} handlePlusClick={handleBigButtonClick}><strong>÷</strong></PlusButton> 
       <BigEqualButton handleBigEqualClick={handleBigEqualClick}><strong>=</strong></BigEqualButton>
-      <InputClearButton inputClearClick={inputClearClick} />
+      <BigClearButton bigClearClick={bigClearClick} />
       <br />
       <FirstEnterButton handleFirstEnterClick={handleFirstEnterClick} />
       <SecondEnterButton handleSecondEnterClick={handleSecondEnterClick} />
       <DoMathButton doMathClick={doMathClick} />
       <MakeEquationButton handleMakeEquationClick={handleMakeEquationClick} />
       <StoreEquationsButton storeEquationsClick={storeEquationsClick} />
+      <InputClearButton inputClearClick={inputClearClick} />
       <EquationClearButton equationClearClick={equationClearClick} />
       <br />
-      {inputState} 
+      {/* {inputState}  */}
       <br />
-      {firstNumber} {operator} {secondNumber} {equalSign} {result}
-      <View inputState={inputState} firstNumber={firstNumber} operator={operator} secondNumber={secondNumber} equalSign={equalSign} result={result} />
-      <EquationsList storeEquations={storeEquations} />
+      {/* {firstNumber} {operator} {secondNumber} {equalSign} {result} */}
     </div>
   );
 };
@@ -282,6 +294,14 @@ function BigEqualButton(props) {
   return (
     <button onClick={() => props.handleBigEqualClick()}>
       =
+    </button>
+  );
+};
+
+function BigClearButton(props) {
+  return (
+    <button onClick={() => props.bigClearClick()}>
+      Clear
     </button>
   );
 };
