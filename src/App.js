@@ -138,14 +138,17 @@ function App() {
       <EqualButton handleEqualClick={handleEqualClick}>=</EqualButton>
       <br />
       <PlusButton value={"+"} handlePlusClick={handlePlusClick}><strong>+</strong></PlusButton> 
+      <PlusButton value={"-"} handlePlusClick={handlePlusClick}><strong>-</strong></PlusButton> 
+      <PlusButton value={"x"} handlePlusClick={handlePlusClick}><strong>x</strong></PlusButton> 
+      <PlusButton value={"÷"} handlePlusClick={handlePlusClick}><strong>÷</strong></PlusButton> 
       <BigEqualButton handleBigEqualClick={handleBigEqualClick}><strong>=</strong></BigEqualButton>
+      <InputClearButton inputClearClick={inputClearClick} />
       <br />
       <FirstEnterButton handleFirstEnterClick={handleFirstEnterClick} />
       <SecondEnterButton handleSecondEnterClick={handleSecondEnterClick} />
       <DoMathButton doMathClick={doMathClick} />
       <MakeEquationButton handleMakeEquationClick={handleMakeEquationClick} />
       <StoreEquationsButton storeEquationsClick={storeEquationsClick} />
-      <InputClearButton inputClearClick={inputClearClick} />
       <EquationClearButton equationClearClick={equationClearClick} />
       <br />
       {inputState} 
