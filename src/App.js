@@ -82,12 +82,14 @@ function App() {
     if (secondNumber !== undefined) {
       handleEqualClick();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [secondNumber]);
 
   useEffect(() => {
     if (result !== undefined) {
       handleMakeEquationClick();
     }    
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [result]);
   
   useEffect(() => {
@@ -96,6 +98,7 @@ function App() {
       inputClearClick();
       equationClearClick();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [equation]);
 
   const inputClearClick = () => {
