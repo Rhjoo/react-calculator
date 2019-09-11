@@ -10,23 +10,66 @@ function App() {
   const [equation, setEquation] = useState();  
   const [result, setResult] = useState();  
   const [storeEquations, setStoreEquations] = useState([]);  
+  const [tempOperator, setTempOperator] = useState();
 
   const handleNumberClick = (value) => {
-    setInputState(inputState + value);
+    if (firstNumber === undefined) {
+      setInputState(inputState + value);
+    } else {
+      if (operator !== undefined) {
+        setInputState(inputState + value);
+      }
+    }
+  };
+
+  const handleBigButtonClick = (value) => {
+    // when nothing in firstNumber slot
+    if (firstNumber === undefined) {
+      handleFirstEnterClick();
+      handleOperatorClick(value);
+      handleBigEqualClick();
+    };
+    // there's something in firstNumber
+    // and if there's no operator
+    if (operator === undefined) {
+      handleOperatorClick(value);
+      inputClearClick();
+    } else {
+      // if there's an operator
+      // and if there's something in the secondNumber slot
+      if (inputState !== "") {
+        setTempOperator(value);
+        handleBigEqualClick();
+      } else {
+        handleOperatorClick(value);
+      }
+    };
   };
   
+  const handleFirstEnterClick = () => {
+    // will run only if there's something in inputState
+    if (inputState !== "") {
+      setFirstNumber(inputState);
+    }
+  };
+
+  const handleBigEqualClick = () => {
+    if (operator !== undefined) {
+      handleSecondEnterClick();
+    }
+  };
+
   const handleDotClick = (value) => {
     if (inputState.slice(-1) !== ".") {
       setInputState(inputState + value);
     }
   };
-  
-  const handleFirstEnterClick = () => {
-    setFirstNumber(inputState);
-  };
-  
+   
   const handleSecondEnterClick = () => {
-    setSecondNumber(inputState);
+    // will run only if there's something in inputState
+    if (inputState !== "") {
+      setSecondNumber(inputState);
+    }
   };
   
   const handleOperatorClick = (value) => {
@@ -63,23 +106,14 @@ function App() {
     };
   };
 
-  const handleBigButtonClick = (value) => {
-    if (firstNumber === undefined) {
-      handleFirstEnterClick();
-    };
-    console.log(value);
-    handleOperatorClick(value);
-    inputClearClick();
-  };
+  
 
   const handleEqualClick = () => {
     setEqualSign("=");
     doMathClick();
   };
   
-  const handleBigEqualClick = async () => {
-    handleSecondEnterClick();
-  };
+ 
 
   useEffect(() => {
     if (secondNumber !== undefined) {
@@ -102,6 +136,8 @@ function App() {
       const temp = result;
       equationClearClick();
       setFirstNumber(temp);
+      setOperator(tempOperator);
+      setTempOperator(undefined);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [equation]);
