@@ -89,24 +89,31 @@ function App() {
   };
 
   const doMathClick = () => {
+    const largerDecimalDigits = Math.max(decimalPlaces(firstNumber), decimalPlaces(secondNumber));
+    const sumDecimalDigits = decimalPlaces(firstNumber) + decimalPlaces(secondNumber);
     switch(operator) {
       case "+":
-        setResult(Number(firstNumber) + Number(secondNumber));
+        setResult((Number(firstNumber) + Number(secondNumber)).toFixed(largerDecimalDigits));
         break;
       case "-":
-        setResult(Number(firstNumber) - Number(secondNumber));
+        setResult((Number(firstNumber) - Number(secondNumber)).toFixed(largerDecimalDigits));
         break;
       case "x":
-        setResult(Number(firstNumber) * Number(secondNumber));
+        setResult((Number(firstNumber) * Number(secondNumber)).toFixed(sumDecimalDigits));
         break;
       case "÷":
-        setResult(Number(firstNumber) / Number(secondNumber));
+        setResult((Number(firstNumber) / Number(secondNumber)).toFixed(sumDecimalDigits));
         break;
       default:  
     };
   };
 
-  
+  const decimalPlaces = (num) => {
+    const match = (''+num).match(/(?:\.(\d+))?(?:[eE]([+-]?\d+))?$/);
+    if (!match) { return 0; }
+    return Math.max(
+         0, (match[1] ? match[1].length : 0) - (match[2] ? +match[2] : 0));
+  };
 
   const handleEqualClick = () => {
     setEqualSign("=");
