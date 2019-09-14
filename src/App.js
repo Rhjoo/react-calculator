@@ -105,18 +105,22 @@ function App() {
   const doMathClick = () => {
     const largerDecimalDigits = Math.max(decimalPlaces(firstNumber), decimalPlaces(secondNumber));
     const sumDecimalDigits = decimalPlaces(firstNumber) + decimalPlaces(secondNumber);
+    // setting max rounding decimal placeds to 6
+    const roundTo8 = (value) => {
+      return Number(Math.round(value+'e'+8)+'e-'+8);
+    }
     switch(operator) {
       case "+":
-        setResult((Number(firstNumber) + Number(secondNumber)).toFixed(largerDecimalDigits));
+        setResult(roundTo8((Number(firstNumber) + Number(secondNumber)).toFixed(largerDecimalDigits)));
         break;
       case "-":
-        setResult((Number(firstNumber) - Number(secondNumber)).toFixed(largerDecimalDigits));
+        setResult(roundTo8((Number(firstNumber) - Number(secondNumber)).toFixed(largerDecimalDigits)));
         break;
       case "x":
-        setResult((Number(firstNumber) * Number(secondNumber)).toFixed(sumDecimalDigits));
+        setResult(roundTo8((Number(firstNumber) * Number(secondNumber)).toFixed(sumDecimalDigits)));
         break;
       case "÷":
-        setResult((Number(firstNumber) / Number(secondNumber)).toFixed(sumDecimalDigits));
+        setResult(roundTo8((Number(firstNumber) / Number(secondNumber))));
         break;
       default:  
     };
