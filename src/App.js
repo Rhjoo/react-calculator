@@ -14,10 +14,18 @@ function App() {
 
   const handleNumberClick = (value) => {
     if (firstNumber === undefined) {
-      setInputState(inputState + value);
+      if (inputState[1] !== ".") {
+        setInputState(inputState.replace(/^0+/, "") + value);
+      } else {
+        setInputState(inputState + value);
+      }
     } else {
       if (operator !== undefined) {
-        setInputState(inputState + value);
+        if (inputState[1] !== ".") {
+          setInputState(inputState.replace(/^0+/, "") + value);
+        } else {
+          setInputState(inputState + value);
+        }
       }
     }
   };
