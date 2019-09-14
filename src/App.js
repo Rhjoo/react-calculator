@@ -175,6 +175,11 @@ function App() {
     equationClearClick();
   };
 
+  const allClearClick = () => {
+    bigClearClick();
+    setStoreEquations([]);
+  }
+
   return (
     <div className="App">
       <EquationsList storeEquations={storeEquations} />
@@ -204,6 +209,7 @@ function App() {
       <PlusButton value={"÷"} handlePlusClick={handleBigButtonClick}><strong>÷</strong></PlusButton> 
       <BigEqualButton handleBigEqualClick={handleBigEqualClick}><strong>=</strong></BigEqualButton>
       <BigClearButton bigClearClick={bigClearClick} />
+      <AllClearButton allClearClick={allClearClick} />
       <br />
       <FirstEnterButton handleFirstEnterClick={handleFirstEnterClick} />
       <SecondEnterButton handleSecondEnterClick={handleSecondEnterClick} />
@@ -350,6 +356,14 @@ function BigClearButton(props) {
   return (
     <button onClick={() => props.bigClearClick()}>
       Clear
+    </button>
+  );
+};
+
+function AllClearButton(props) {
+  return (
+    <button onClick={() => props.allClearClick()}>
+      All Clear
     </button>
   );
 };
