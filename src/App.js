@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import uuid from 'uuid/v1';
 
 function App() {
-  const [inputState, setInputState] = useState("");
+  const [inputState, setInputState] = useState("0");
   const [operator, setOperator] = useState();
   const [firstNumber, setFirstNumber] = useState();
   const [secondNumber, setSecondNumber] = useState();
@@ -33,7 +33,7 @@ function App() {
     // and if there's no operator
     if (operator === undefined) {
       handleOperatorClick(value);
-      inputClearClick();
+      inputClearClickToEmpty();
     } else {
       // if there's an operator
       // and if there's something in the secondNumber slot
@@ -144,7 +144,7 @@ function App() {
   useEffect(() => {
     if (equation !== undefined) {
       storeEquationsClick();
-      inputClearClick();
+      inputClearClickToEmpty();
       const temp = result;
       equationClearClick();
       setFirstNumber(temp);
@@ -154,7 +154,11 @@ function App() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [equation]);
 
-  const inputClearClick = () => {
+  const inputClearClickToZero = () => {
+    setInputState("0");
+  };
+  
+  const inputClearClickToEmpty = () => {
     setInputState("");
   };
 
@@ -171,7 +175,7 @@ function App() {
   };
 
   const bigClearClick = () => {
-    setInputState("");
+    inputClearClickToZero();
     equationClearClick();
   };
 
@@ -216,7 +220,7 @@ function App() {
       <DoMathButton doMathClick={doMathClick} />
       <MakeEquationButton handleMakeEquationClick={handleMakeEquationClick} />
       <StoreEquationsButton storeEquationsClick={storeEquationsClick} />
-      <InputClearButton inputClearClick={inputClearClick} />
+      <InputClearButton inputClearClickToEmpty={inputClearClickToEmpty} />
       <EquationClearButton equationClearClick={equationClearClick} />
       <br />
       {/* {inputState}  */}
@@ -292,7 +296,7 @@ function DoMathButton(props) {
 
 function InputClearButton(props) {
   return (
-    <button onClick={() => props.inputClearClick()}>
+    <button onClick={() => props.inputClearClickToEmpty()}>
       Clear Input
     </button>
   );
