@@ -61,11 +61,11 @@ function App() {
 
   const handleDotClick = (value) => {
     if (firstNumber === undefined) {
-      if (inputState.slice(-1) !== ".") {
+      if (inputState.slice(-1) !== "." && !inputState.includes(".")) {
         setInputState(inputState + value);
       }
     } else if (operator !== undefined) {
-      if (inputState.slice(-1) !== ".") {
+      if (inputState.slice(-1) !== "." && !inputState.includes(".")) {
         setInputState(inputState + value);
       }
     }
