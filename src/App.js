@@ -60,8 +60,14 @@ function App() {
   };
 
   const handleDotClick = (value) => {
-    if (inputState.slice(-1) !== ".") {
-      setInputState(inputState + value);
+    if (firstNumber === undefined) {
+      if (inputState.slice(-1) !== ".") {
+        setInputState(inputState + value);
+      }
+    } else if (operator !== undefined) {
+      if (inputState.slice(-1) !== ".") {
+        setInputState(inputState + value);
+      }
     }
   };
    
