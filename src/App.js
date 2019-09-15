@@ -18,19 +18,45 @@ function App() {
         setInputState(inputState.replace(/^0+/, "") + value);
       } else {
         setInputState(inputState + value);
-      }
+      };
     } else {
       if (operator !== undefined) {
         if (inputState[1] !== ".") {
           setInputState(inputState.replace(/^0+/, "") + value);
         } else {
           setInputState(inputState + value);
-        }
-      }
-    }
+        };
+      };
+    };
   };
 
-  const handleBigButtonClick = (value) => {
+  const handleFirstEnterClick = () => {
+    // will run only if there's something in inputState
+    if (inputState !== "") {
+      setFirstNumber(inputState);
+    };
+  };
+
+  const handleSecondEnterClick = () => {
+    // will run only if there's something in inputState
+    if (inputState !== "") {
+      setSecondNumber(inputState);
+    };
+  };
+
+  const handleDotClick = (value) => {
+    if (firstNumber === undefined) {
+      if (inputState.slice(-1) !== "." && !inputState.includes(".")) {
+        setInputState(inputState + value);
+      };
+    } else if (operator !== undefined) {
+      if (inputState.slice(-1) !== "." && !inputState.includes(".")) {
+        setInputState(inputState + value);
+      };
+    };
+  };
+
+  const handleBigOperatorClick = (value) => {
     // when nothing in firstNumber slot
     if (firstNumber === undefined) {
       handleFirstEnterClick();
@@ -50,48 +76,36 @@ function App() {
         handleBigEqualClick();
       } else {
         handleOperatorClick(value);
-      }
+      };
     };
   };
   
-  const handleFirstEnterClick = () => {
-    // will run only if there's something in inputState
-    if (inputState !== "") {
-      setFirstNumber(inputState);
-    }
-  };
-
   const handleBigEqualClick = () => {
     if (operator !== undefined) {
       handleSecondEnterClick();
-    }
+    };
   };
 
-  const handleDotClick = (value) => {
-    if (firstNumber === undefined) {
-      if (inputState.slice(-1) !== "." && !inputState.includes(".")) {
-        setInputState(inputState + value);
-      }
-    } else if (operator !== undefined) {
-      if (inputState.slice(-1) !== "." && !inputState.includes(".")) {
-        setInputState(inputState + value);
-      }
-    }
+  const bigClearClick = () => {
+    if (operator !== undefined && inputState !== "") {
+      inputClearClickToEmpty();
+    } else {
+      inputClearClickToZero();
+      equationClearClick();
+    };
   };
-   
-  const handleSecondEnterClick = () => {
-    // will run only if there's something in inputState
-    if (inputState !== "") {
-      setSecondNumber(inputState);
-    }
+
+  const allClearClick = () => {
+    bigClearClick();
+    setStoreEquations([]);
   };
-  
+
   const handleOperatorClick = (value) => {
     if (inputState !== "" || firstNumber !== undefined) {
       setOperator(value);
-    }
+    };
   };
-
+  
   const handleMakeEquationClick = () => {
     setEquation({
       id: uuid(),
@@ -99,7 +113,7 @@ function App() {
       operator: operator,
       secondNumber: secondNumber,
       result: result
-    })
+    });
   };
 
   const doMathClick = () => {
@@ -108,7 +122,7 @@ function App() {
     // setting max rounding decimal places to 8
     const roundTo8 = (value) => {
       return Number(Math.round(value+'e'+8)+'e-'+8);
-    }
+    };
     switch(operator) {
       case "+":
         setResult(roundTo8((Number(firstNumber) + Number(secondNumber)).toFixed(largerDecimalDigits)));
@@ -186,25 +200,10 @@ function App() {
     setStoreEquations([...storeEquations, equation]);
   };
 
-  const bigClearClick = () => {
-    if (operator !== undefined && inputState !== "") {
-      inputClearClickToEmpty();
-    } else {
-      inputClearClickToZero();
-      equationClearClick();
-    }
-  };
-
-  const allClearClick = () => {
-    bigClearClick();
-    setStoreEquations([]);
-  }
-
   return (
     <div className="App">
       <EquationsList storeEquations={storeEquations} />
       <View inputState={inputState} firstNumber={firstNumber} operator={operator} secondNumber={secondNumber} equalSign={equalSign} result={result} />
-      <br />
       <NumberButton value={1} handleNumberClick={handleNumberClick}>1</NumberButton> 
       <NumberButton value={2} handleNumberClick={handleNumberClick}>2</NumberButton> 
       <NumberButton value={3} handleNumberClick={handleNumberClick}>3</NumberButton> 
@@ -217,120 +216,14 @@ function App() {
       <NumberButton value={0} handleNumberClick={handleNumberClick}>0</NumberButton> 
       <DotButton value={"."} handleDotClick={handleDotClick}>.</DotButton> 
       <br />
-      <OperatorButton value={"+"} handleOperatorClick={handleOperatorClick}>+</OperatorButton> 
-      <OperatorButton value={"-"} handleOperatorClick={handleOperatorClick}>-</OperatorButton>
-      <OperatorButton value={"x"} handleOperatorClick={handleOperatorClick}>x</OperatorButton>
-      <OperatorButton value={"÷"} handleOperatorClick={handleOperatorClick}>÷</OperatorButton>
-      <EqualButton handleEqualClick={handleEqualClick}>=</EqualButton>
-      <br />
-      <PlusButton value={"+"} handlePlusClick={handleBigButtonClick}><strong>+</strong></PlusButton> 
-      <PlusButton value={"-"} handlePlusClick={handleBigButtonClick}><strong>-</strong></PlusButton> 
-      <PlusButton value={"x"} handlePlusClick={handleBigButtonClick}><strong>x</strong></PlusButton> 
-      <PlusButton value={"÷"} handlePlusClick={handleBigButtonClick}><strong>÷</strong></PlusButton> 
-      <BigEqualButton handleBigEqualClick={handleBigEqualClick}><strong>=</strong></BigEqualButton>
+      <OperatorButton value={"+"} handleBigOperatorClick={handleBigOperatorClick}>+</OperatorButton> 
+      <OperatorButton value={"-"} handleBigOperatorClick={handleBigOperatorClick}>-</OperatorButton> 
+      <OperatorButton value={"x"} handleBigOperatorClick={handleBigOperatorClick}>x</OperatorButton> 
+      <OperatorButton value={"÷"} handleBigOperatorClick={handleBigOperatorClick}>÷</OperatorButton> 
+      <BigEqualButton handleBigEqualClick={handleBigEqualClick}>=</BigEqualButton>
       <BigClearButton bigClearClick={bigClearClick} />
       <AllClearButton allClearClick={allClearClick} />
-      <br />
-      <FirstEnterButton handleFirstEnterClick={handleFirstEnterClick} />
-      <SecondEnterButton handleSecondEnterClick={handleSecondEnterClick} />
-      <DoMathButton doMathClick={doMathClick} />
-      <MakeEquationButton handleMakeEquationClick={handleMakeEquationClick} />
-      <StoreEquationsButton storeEquationsClick={storeEquationsClick} />
-      <InputClearButton inputClearClickToEmpty={inputClearClickToEmpty} />
-      <EquationClearButton equationClearClick={equationClearClick} />
-      <br />
-      {/* {inputState}  */}
-      <br />
-      {/* {firstNumber} {operator} {secondNumber} {equalSign} {result} */}
     </div>
-  );
-};
-
-function NumberButton(props) {
-  return (
-    <button onClick={() => props.handleNumberClick(props.value)}>
-      {props.children}
-    </button>
-  );
-};
-
-function PlusButton(props) {
-  return (
-    <button onClick={() => props.handlePlusClick(props.value)}>
-      {props.children}
-    </button>
-  );
-};
-
-function DotButton(props) {
-  return (
-    <button onClick={() => props.handleDotClick(props.value)}>
-      {props.children}
-    </button>
-  );
-};
-
-function OperatorButton(props) {
-  return (
-    <button onClick={() => props.handleOperatorClick(props.value)}>
-      {props.children}
-    </button>
-  );
-};
-
-function FirstEnterButton(props) {
-  return (
-    <button onClick={() => props.handleFirstEnterClick()}>
-      Enter First Number
-    </button>
-  );
-};
-
-function SecondEnterButton(props) {
-  return (
-    <button onClick={() => props.handleSecondEnterClick()}>
-      Enter Second Number
-    </button>
-  );
-};
-
-function MakeEquationButton(props) {
-  return (
-    <button onClick={() => props.handleMakeEquationClick()}>
-      Make Equation
-    </button>
-  );
-};
-
-function DoMathButton(props) {
-  return (
-    <button onClick={() => props.doMathClick()}>
-      Do the Math!
-    </button>
-  );
-};
-
-function InputClearButton(props) {
-  return (
-    <button onClick={() => props.inputClearClickToEmpty()}>
-      Clear Input
-    </button>
-  );
-};
-
-function EquationClearButton(props) {
-  return (
-    <button onClick={() => props.equationClearClick()}>
-      Clear Equation
-    </button>
-  );
-};
-
-function StoreEquationsButton(props) {
-  return (
-    <button onClick={() => props.storeEquationsClick()}>
-      Store equation
-    </button>
   );
 };
 
@@ -356,10 +249,51 @@ function Equation(props) {
   );
 };
 
-function EqualButton(props) {
+function View(props) {
+  const { inputState, firstNumber, operator, secondNumber, equalSign, result } = props;
+  if (firstNumber === undefined) {
+    return (
+      <div>
+        {inputState}
+      </div>
+    )
+  } else {
+    if (secondNumber === undefined) {
+      return (
+        <div>
+          {firstNumber} {operator} {inputState} {equalSign} {result}
+        </div>
+      )
+    } else {
+      return (
+        <div>
+          {firstNumber} {operator} {secondNumber} {equalSign} {result}
+        </div>
+      )
+    }
+  };
+};
+
+function NumberButton(props) {
   return (
-    <button onClick={() => props.handleEqualClick()}>
-      =
+    <button onClick={() => props.handleNumberClick(props.value)}>
+      {props.children}
+    </button>
+  );
+};
+
+function OperatorButton(props) {
+  return (
+    <button onClick={() => props.handleBigOperatorClick(props.value)}>
+      {props.children}
+    </button>
+  );
+};
+
+function DotButton(props) {
+  return (
+    <button onClick={() => props.handleDotClick(props.value)}>
+      {props.children}
     </button>
   );
 };
@@ -386,32 +320,6 @@ function AllClearButton(props) {
       All Clear
     </button>
   );
-};
-
-function View(props) {
-  const { inputState, firstNumber, operator, secondNumber, equalSign, result } = props;
-
-  if (firstNumber === undefined) {
-    return (
-      <div>
-        {inputState}
-      </div>
-    )
-  } else {
-    if (secondNumber === undefined) {
-      return (
-        <div>
-          {firstNumber} {operator} {inputState} {equalSign} {result}
-        </div>
-      )
-    } else {
-      return (
-        <div>
-          {firstNumber} {operator} {secondNumber} {equalSign} {result}
-        </div>
-      )
-    }
-  }
 };
 
 export default App;
