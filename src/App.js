@@ -105,7 +105,7 @@ function App() {
   const doMathClick = () => {
     const largerDecimalDigits = Math.max(decimalPlaces(firstNumber), decimalPlaces(secondNumber));
     const sumDecimalDigits = decimalPlaces(firstNumber) + decimalPlaces(secondNumber);
-    // setting max rounding decimal placeds to 6
+    // setting max rounding decimal places to 8
     const roundTo8 = (value) => {
       return Number(Math.round(value+'e'+8)+'e-'+8);
     }
@@ -187,8 +187,12 @@ function App() {
   };
 
   const bigClearClick = () => {
-    inputClearClickToZero();
-    equationClearClick();
+    if (operator !== undefined && inputState !== "") {
+      inputClearClickToEmpty();
+    } else {
+      inputClearClickToZero();
+      equationClearClick();
+    }
   };
 
   const allClearClick = () => {
