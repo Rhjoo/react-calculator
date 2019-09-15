@@ -51,7 +51,11 @@ function App() {
       };
     } else if (operator !== undefined) {
       if (inputState.slice(-1) !== "." && !inputState.includes(".")) {
-        setInputState(inputState + value);
+        if (inputState === "") {
+          setInputState(inputState + "0" + value);
+        } else {
+          setInputState(inputState + value);
+        };
       };
     };
   };
