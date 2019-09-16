@@ -1,0 +1,117 @@
+.App {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 80vh;
+  width: 100%;
+}
+
+.calc-wrapper {
+  width: 400px;
+  height: 600px;
+}
+
+.number-buttons {
+  justify-content: center;
+  width: 100%;
+  
+}
+
+.button {
+  height: 4.2em;
+  flex: 1;
+  background-color: palevioletred;
+  font-size: 1.5em;
+  font-family: Quicksand;
+}
+
+.button:focus {outline: none}
+
+.row {
+  display: flex;
+  width: 100%;
+}
+
+.last-row {
+  display: flex;
+  width: 100%;
+}
+
+.operator {
+  flex: 1;
+  background-color: plum;
+  font-size: 1.5em;
+  font-family: Quicksand;
+}
+
+.operator:focus {outline: none}
+
+#clear {
+  flex: 1;
+  background-color: plum;
+  font-size: 1.5em;
+  font-family: Quicksand;
+}
+
+#clear:focus {outline: none}
+
+#all-clear {
+  flex: 1;
+  background-color: plum;
+  font-size: 1.5em;
+  font-family: Quicksand;
+}
+
+#all-clear:focus {outline: none}
+
+#zero {
+  width: 153px;
+  border-color: black;
+  border-width: 1px;
+}
+
+#dot {
+  width: 80px;
+  background-color: palevioletred;
+  font-size: 2.5em;
+  font-family: Quicksand;
+}
+
+#dot:focus {outline: none}
+
+#equal-sign {
+  width: 160px;
+  background-color: plum;
+  font-size: 1.5em;
+  font-family: Quicksand;
+}
+
+#equal-sign:focus {outline: none}
+
+.display {
+  display: flex;
+  justify-content: flex-end;
+  flex-direction: column;
+  height: 200px;
+  width: 100%;
+  font-size: 1.5em;
+  vertical-align: bottom;
+  text-align: right;
+  background-color: turquoise;
+  font-family: Quicksand;
+  
+}
+
+.equation-list {
+  list-style-type: none;
+  margin-right: 5px;
+  margin-left: 5px;
+  overflow-x: auto;
+}
+
+.view {
+  background-color: turquoise;
+  font-size: 1.3em;
+  margin-right: 5px;
+  margin-left: 5px;
+}

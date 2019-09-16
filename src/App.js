@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import './App.css';
 import uuid from 'uuid/v1';
 
 function App() {
@@ -206,34 +207,47 @@ function App() {
 
   return (
     <div className="App">
-      <EquationsList storeEquations={storeEquations} />
-      <View inputState={inputState} firstNumber={firstNumber} operator={operator} secondNumber={secondNumber} equalSign={equalSign} result={result} />
-      <NumberButton value={1} handleNumberClick={handleNumberClick}>1</NumberButton> 
-      <NumberButton value={2} handleNumberClick={handleNumberClick}>2</NumberButton> 
-      <NumberButton value={3} handleNumberClick={handleNumberClick}>3</NumberButton> 
-      <NumberButton value={4} handleNumberClick={handleNumberClick}>4</NumberButton> 
-      <NumberButton value={5} handleNumberClick={handleNumberClick}>5</NumberButton> 
-      <NumberButton value={6} handleNumberClick={handleNumberClick}>6</NumberButton> 
-      <NumberButton value={7} handleNumberClick={handleNumberClick}>7</NumberButton> 
-      <NumberButton value={8} handleNumberClick={handleNumberClick}>8</NumberButton> 
-      <NumberButton value={9} handleNumberClick={handleNumberClick}>9</NumberButton> 
-      <NumberButton value={0} handleNumberClick={handleNumberClick}>0</NumberButton> 
-      <DotButton value={"."} handleDotClick={handleDotClick}>.</DotButton> 
-      <br />
-      <OperatorButton value={"+"} handleBigOperatorClick={handleBigOperatorClick}>+</OperatorButton> 
-      <OperatorButton value={"-"} handleBigOperatorClick={handleBigOperatorClick}>-</OperatorButton> 
-      <OperatorButton value={"x"} handleBigOperatorClick={handleBigOperatorClick}>x</OperatorButton> 
-      <OperatorButton value={"÷"} handleBigOperatorClick={handleBigOperatorClick}>÷</OperatorButton> 
-      <BigEqualButton handleBigEqualClick={handleBigEqualClick}>=</BigEqualButton>
-      <BigClearButton bigClearClick={bigClearClick} />
-      <AllClearButton allClearClick={allClearClick} />
+      <div className="calc-wrapper">
+        <div className="display">
+          <EquationsList storeEquations={storeEquations} />
+          <View inputState={inputState} firstNumber={firstNumber} operator={operator} secondNumber={secondNumber} equalSign={equalSign} result={result} />
+        </div>
+        <div className="number-buttons">
+          <div className="row">
+            <NumberButton value={7} handleNumberClick={handleNumberClick}>7</NumberButton> 
+            <NumberButton value={8} handleNumberClick={handleNumberClick}>8</NumberButton> 
+            <NumberButton value={9} handleNumberClick={handleNumberClick}>9</NumberButton> 
+            <BigClearButton bigClearClick={bigClearClick} />
+            <AllClearButton allClearClick={allClearClick} />
+          </div>
+          <div className="row">
+            <NumberButton value={4} handleNumberClick={handleNumberClick}>4</NumberButton> 
+            <NumberButton value={5} handleNumberClick={handleNumberClick}>5</NumberButton> 
+            <NumberButton value={6} handleNumberClick={handleNumberClick}>6</NumberButton> 
+            <OperatorButton value={"x"} handleBigOperatorClick={handleBigOperatorClick}>x</OperatorButton> 
+            <OperatorButton value={"÷"} handleBigOperatorClick={handleBigOperatorClick}>÷</OperatorButton> 
+          </div>
+          <div className="row">
+            <NumberButton value={1} handleNumberClick={handleNumberClick}>1</NumberButton> 
+            <NumberButton value={2} handleNumberClick={handleNumberClick}>2</NumberButton> 
+            <NumberButton value={3} handleNumberClick={handleNumberClick}>3</NumberButton> 
+            <OperatorButton value={"+"} handleBigOperatorClick={handleBigOperatorClick}>+</OperatorButton> 
+            <OperatorButton value={"-"} handleBigOperatorClick={handleBigOperatorClick}>-</OperatorButton> 
+          </div>
+          <div className="last-row">
+            <NumberButton className="zero" value={0} handleNumberClick={handleNumberClick}>0</NumberButton> 
+            <DotButton value={"."} handleDotClick={handleDotClick}>.</DotButton> 
+            <BigEqualButton handleBigEqualClick={handleBigEqualClick}>=</BigEqualButton>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };
 
 function EquationsList(props) {
   return (
-    <div>
+    <div className="equation-list">
       {props.storeEquations.map(
         equation => <Equation key={equation.id} 
                               firstNumber={equation.firstNumber} 
@@ -257,20 +271,20 @@ function View(props) {
   const { inputState, firstNumber, operator, secondNumber, equalSign, result } = props;
   if (firstNumber === undefined) {
     return (
-      <div>
+      <div className="view">
         {inputState}
       </div>
     )
   } else {
     if (secondNumber === undefined) {
       return (
-        <div>
+        <div className="view">
           {firstNumber} {operator} {inputState} {equalSign} {result}
         </div>
       )
     } else {
       return (
-        <div>
+        <div className="view">
           {firstNumber} {operator} {secondNumber} {equalSign} {result}
         </div>
       )
@@ -280,7 +294,7 @@ function View(props) {
 
 function NumberButton(props) {
   return (
-    <button onClick={() => props.handleNumberClick(props.value)}>
+    <button className="button" onClick={() => props.handleNumberClick(props.value)}>
       {props.children}
     </button>
   );
@@ -288,7 +302,7 @@ function NumberButton(props) {
 
 function OperatorButton(props) {
   return (
-    <button onClick={() => props.handleBigOperatorClick(props.value)}>
+    <button className="operator" onClick={() => props.handleBigOperatorClick(props.value)}>
       {props.children}
     </button>
   );
@@ -296,7 +310,7 @@ function OperatorButton(props) {
 
 function DotButton(props) {
   return (
-    <button onClick={() => props.handleDotClick(props.value)}>
+    <button id="dot" onClick={() => props.handleDotClick(props.value)}>
       {props.children}
     </button>
   );
@@ -304,7 +318,7 @@ function DotButton(props) {
 
 function BigEqualButton(props) {
   return (
-    <button onClick={() => props.handleBigEqualClick()}>
+    <button id="equal-sign" onClick={() => props.handleBigEqualClick()}>
       =
     </button>
   );
@@ -312,16 +326,16 @@ function BigEqualButton(props) {
 
 function BigClearButton(props) {
   return (
-    <button onClick={() => props.bigClearClick()}>
-      Clear
+    <button id="clear" onClick={() => props.bigClearClick()}>
+      C
     </button>
   );
 };
 
 function AllClearButton(props) {
   return (
-    <button onClick={() => props.allClearClick()}>
-      All Clear
+    <button id="all-clear" onClick={() => props.allClearClick()}>
+      AC
     </button>
   );
 };
