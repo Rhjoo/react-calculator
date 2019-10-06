@@ -3,6 +3,15 @@ import './App.css';
 import uuid from 'uuid/v1';
 import { Scrollbar } from 'react-scrollbars-custom';
 
+import EquationsList from './components/EquationsList';
+import View from './components/View';
+import NumberButton from './components/NumberButton';
+import OperatorButton from './components/OperatorButton';
+import DotButton from './components/DotButton';
+import BigEqualButton from './components/BigEqualButton';
+import BigClearButton from './components/BigClearButton';
+import AllClearButton from './components/AllClearButton';
+
 function App() {
   const [inputState, setInputState] = useState("0");
   const [operator, setOperator] = useState();
@@ -245,101 +254,6 @@ function App() {
         </div>
       </div>
     </div>
-  );
-};
-
-function EquationsList(props) {
-  return (
-    <div className="equation-list">
-      {props.storeEquations.map(
-        equation => <Equation key={equation.id} 
-                              firstNumber={equation.firstNumber} 
-                              operator={equation.operator} 
-                              secondNumber={equation.secondNumber} 
-                              result={equation.result} />
-      )}
-    </div>
-  );
-};
-
-function Equation(props) {
-  return (
-    <li>
-      {props.firstNumber} {props.operator} {props.secondNumber} = {props.result}
-    </li>
-  );
-};
-
-function View(props) {
-  const { inputState, firstNumber, operator, secondNumber, equalSign, result } = props;
-  if (firstNumber === undefined) {
-    return (
-      <div className="view">
-        {inputState}
-      </div>
-    )
-  } else {
-    if (secondNumber === undefined) {
-      return (
-        <div className="view">
-          {firstNumber} {operator} {inputState} {equalSign} {result}
-        </div>
-      )
-    } else {
-      return (
-        <div className="view">
-          {firstNumber} {operator} {secondNumber} {equalSign} {result}
-        </div>
-      )
-    }
-  };
-};
-
-function NumberButton(props) {
-  return (
-    <button className="button" onClick={() => props.handleNumberClick(props.value)}>
-      {props.children}
-    </button>
-  );
-};
-
-function OperatorButton(props) {
-  return (
-    <button className="operator" onClick={() => props.handleBigOperatorClick(props.value)}>
-      {props.children}
-    </button>
-  );
-};
-
-function DotButton(props) {
-  return (
-    <button id="dot" onClick={() => props.handleDotClick(props.value)}>
-      {props.children}
-    </button>
-  );
-};
-
-function BigEqualButton(props) {
-  return (
-    <button id="equal-sign" onClick={() => props.handleBigEqualClick()}>
-      =
-    </button>
-  );
-};
-
-function BigClearButton(props) {
-  return (
-    <button id="clear" onClick={() => props.bigClearClick()}>
-      C
-    </button>
-  );
-};
-
-function AllClearButton(props) {
-  return (
-    <button id="all-clear" onClick={() => props.allClearClick()}>
-      AC
-    </button>
   );
 };
 
