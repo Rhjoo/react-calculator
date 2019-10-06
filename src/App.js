@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './App.css';
 import uuid from 'uuid/v1';
+import { Scrollbar } from 'react-scrollbars-custom';
 
 function App() {
   const [inputState, setInputState] = useState("0");
@@ -209,8 +210,10 @@ function App() {
     <div className="App">
       <div className="calc-wrapper">
         <div className="display">
-          <EquationsList storeEquations={storeEquations} />
-          <View inputState={inputState} firstNumber={firstNumber} operator={operator} secondNumber={secondNumber} equalSign={equalSign} result={result} />
+          <Scrollbar>
+            <EquationsList storeEquations={storeEquations} />
+            <View inputState={inputState} firstNumber={firstNumber} operator={operator} secondNumber={secondNumber} equalSign={equalSign} result={result} />
+          </Scrollbar>
         </div>
         <div className="number-buttons">
           <div className="row">
